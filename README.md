@@ -1,2 +1,2 @@
-# bitloom-ledblink
-Blink a LED using the BitLoom framwork
+# BitLoom LEDblink
+Blink a LED using the BitLoom framework
