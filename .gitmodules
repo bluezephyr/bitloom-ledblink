@@ -1,0 +1,6 @@
+[submodule "bitloom-core"]
+	path = bitloom-core
+	url = ../bitloom-core
+[submodule "bitloom-avr"]
+	path = bitloom-avr
+	url = ../bitloom-avr
