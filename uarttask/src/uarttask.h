@@ -1,5 +1,5 @@
 /*
- * This task toggles a LED each time the task's run function is called.
+ * This task receives information from UART and uses it to control a LED.
  *
  * Copyright (c) 2020. BlueZephyr
  *
@@ -8,8 +8,8 @@
  *
  *
  */
-#ifndef BLINKTASK_H
-#define BLINKTASK_H
+#ifndef UARTTASK_H
+#define UARTTASK_H
 
 #include <stdint.h>
 
@@ -17,17 +17,11 @@
  * Init function. Must be called before the scheduler is started.
  * The id is the task id and is pro
  */
-void blink_task_init (uint8_t taskid);
-
-/*
- * Functions to enable and disable blinking
- */
-void blink_task_enable_blink(void);
-void blink_task_disable_blink(void);
+void uart_task_init (uint8_t taskid);
 
 /*
  * Run function for the task. Called by the scheduler.
  */
-void blink_task_run (void);
+void uart_task_run (void);
 
-#endif // BLINKTASK_H
+#endif // UARTTASK_H

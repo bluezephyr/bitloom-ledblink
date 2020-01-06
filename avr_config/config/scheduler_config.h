@@ -6,6 +6,6 @@
  * will be resereved to hold its internal state.  The maximum number of tasks
  * is 32.
  */
-#define SCHEDULER_NO_TASKS      1
+#define SCHEDULER_NO_TASKS      2
 
 #endif  // SCHEDULER_CONFIG_H

@@ -13,21 +13,40 @@
 #include "hal/pin_digital_io.h"
 #include "blinktask.h"
 
-// This id is given by the scheduler when the task is added.
-static uint8_t blink_task_id = 0;
-static bool led_activated;
+typedef struct
+{
+    bool led_activated;
+    bool blinking_enabled;
+} blinktask_t;
+static blinktask_t self;
 
 void blink_task_init (uint8_t taskid)
 {
-    // Set the task id
-    blink_task_id = taskid;
-    led_activated = true;
+    (void)taskid;
+    self.led_activated = false;
+    self.blinking_enabled = false;
+}
+
+void blink_task_enable_blink(void)
+{
+    self.blinking_enabled = true;
+    self.led_activated = true;
+}
+
+void blink_task_disable_blink(void)
+{
+    self.blinking_enabled = false;
+    self.led_activated = false;
 }
 
 void blink_task_run (void)
 {
-    led_activated = !led_activated;
-    if (led_activated)
+    if (self.blinking_enabled)
+    {
+        self.led_activated = !self.led_activated;
+    }
+
+    if (self.led_activated)
     {
         pin_digital_io_write_high(LED_GREEN);
     }
@@ -36,4 +55,5 @@ void blink_task_run (void)
         pin_digital_io_write_low(LED_GREEN);
     }
 }
+
 
