@@ -13,6 +13,9 @@ set(BITLOOM_CORE "${CMAKE_CURRENT_SOURCE_DIR}/bitloom-core")
 # for the project's target environment as well as the processor specifics.
 set(BITLOOM_CONFIG ${CMAKE_CURRENT_SOURCE_DIR}/${CONFIG})
 
+# CUTIL is a library containing common c utilities.  CUTIL needs to be set.
+set(CUTIL "${CMAKE_CURRENT_SOURCE_DIR}/cutil")
+
 # Output BitLoom specific folders
 message(STATUS "CMAKE SOURCE: ${CMAKE_CURRENT_SOURCE_DIR}")
 message(STATUS "BITLOOM_HAL: ${BITLOOM_HAL}")
@@ -48,6 +51,7 @@ add_subdirectory(${BITLOOM_HAL}/src/uart libs/hal/uart)
 add_subdirectory(${BITLOOM_CONFIG}/config libs/config)
 add_subdirectory(blinktask libs/blinktask)
 add_subdirectory(uarttask/src libs/uarttask)
+add_subdirectory(${CUTIL}/src/bytebuffer libs/bytebuffer)
 
 cc_target_link_libraries(ledblink blinktask)
 cc_target_link_libraries(ledblink uarttask)
@@ -56,4 +60,5 @@ cc_target_link_libraries(ledblink scheduler)
 cc_target_link_libraries(ledblink timer)
 cc_target_link_libraries(ledblink pin_digital_io)
 cc_target_link_libraries(ledblink config)
+cc_target_link_libraries(ledblink bytebuffer)
 

@@ -4,3 +4,6 @@
 [submodule "bitloom-avr"]
 	path = bitloom-avr
 	url = ../bitloom-avr
+[submodule "cutil"]
+	path = cutil
+	url = ../cutil
