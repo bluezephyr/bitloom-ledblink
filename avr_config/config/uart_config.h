@@ -7,6 +7,7 @@
  * the sizes must be a power of two.  Maximum size is 128.
  */
 
-#define INBUFFER_DATA_SIZE 8
+#define INBUFFER_DATA_SIZE  8
+#define OUTBUFFER_DATA_SIZE 8
 
 #endif  // UART_CONFIG_H

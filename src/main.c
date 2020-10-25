@@ -1,6 +1,7 @@
 /*
  * Ledblink is an example hack for the BitLoom framework.  It implements a
- * simple task that blinks with a LED.
+ * simple task that blinks with a LED.  The LED can be controlled using
+ * commands sent over UART.
  *
  * Copyright (c) 2020. BlueZephyr
  *
@@ -10,11 +11,11 @@
  */
 
 #include "core/scheduler.h"
+#include "core/uart.h"
 #include "hal/timer.h"
-#include "hal/uart.h"
 #include "config/port_config.h"
 #include "blinktask.h"
-#include "src/uarttask.h"
+#include "ledcontrol.h"
 
 int main(void)
 {
@@ -25,10 +26,11 @@ int main(void)
 
     // Task initializations
     blink_task_init(schedule_add_task(240, 0, blink_task_run));
-    uart_task_init(schedule_add_task(10, 0, uart_task_run));
+    ledcontrol_init(schedule_add_task(10, 0, ledcontrol_run));
 
     schedule_start();
     blink_task_enable_blink();
+
     while(1)
     {
         schedule_run();

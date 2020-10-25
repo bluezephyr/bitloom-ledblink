@@ -1,5 +1,5 @@
 /*
- * This task receives information from UART and uses it to control a LED.
+ * This task controls LED task by commands received on UART.
  *
  * Copyright (c) 2020. BlueZephyr
  *
@@ -8,8 +8,8 @@
  *
  *
  */
-#ifndef UARTTASK_H
-#define UARTTASK_H
+#ifndef LEDCONTROL_H
+#define LEDCONTROL_H
 
 #include <stdint.h>
 
@@ -17,11 +17,11 @@
  * Init function. Must be called before the scheduler is started.
  * The id is the task id and is pro
  */
-void uart_task_init (uint8_t taskid);
+void ledcontrol_init (uint8_t taskid);
 
 /*
- * Run function for the task. Called by the scheduler.
+ * Run function for the ledcontrol task. Called by the scheduler.
  */
-void uart_task_run (void);
+void ledcontrol_run (void);
 
-#endif // UARTTASK_H
+#endif // LEDCONTROL_H

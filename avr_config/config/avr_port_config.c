@@ -12,6 +12,6 @@
 
 void port_init(void)
 {
-    PORTB |= (0 << PB1);
-    DDRB |= (1 << PB1);
+    PORTB |= 0u << PB1;
+    DDRB |= 1u << PB1;
 }
