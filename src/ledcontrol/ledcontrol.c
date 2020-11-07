@@ -13,22 +13,26 @@
 #include "blinktask.h"
 #include "core/uart.h"
 
-const char infoText[] = "Welcome to the LED blinker.";
+const char infoText[] = "\rWelcome to the LED blinker.\n\r"
+                        "Press o to start LED\n\r"
+                        "Press p to stop LED\n\r"
+                        "Press i to enter input mode\n\r"
+                        "Press h to show this text\r\n";
 const int16_t infoTextLen = sizeof(infoText);
 
 typedef struct
 {
     uint8_t taskId;
-    bool sendInfo;
-    uint8_t infoTextPos;
+    bool sendInfoText;
+    bool input_mode;
 } led_control_t;
 static led_control_t self;
 
 void ledcontrol_init (uint8_t taskId)
 {
     self.taskId = taskId;
-    self.sendInfo = false;
-    self.infoTextPos = 0;
+    self.sendInfoText = true;
+    self.input_mode = false;
 }
 
 void ledcontrol_run (void)
@@ -41,24 +45,39 @@ void ledcontrol_run (void)
 
     if (result > 0)
     {
-        switch (selection)
+        if (self.input_mode)
         {
-            case 'h':
-                if (!self.sendInfo)
-                {
-                    self.sendInfo = true;
-                    self.infoTextPos = 0;
-                }
-                break;
-            case 'o':
-                blink_task_enable_blink();
-                break;
-            case 'p':
-                blink_task_disable_blink();
-                break;
-            default:
-                // Ignore other
-                break;
+            if (selection == 0x1B)
+            {
+                self.input_mode = false;
+                uart_write((uint8_t*)"\r\nNormal mode\r\n", 15);
+            }
+            else
+            {
+                uart_write(&selection, 1);
+            }
+            selection = 0;
+        }
+        else
+        {
+            switch (selection)
+            {
+                case 'h':
+                    self.sendInfoText = true;
+                    break;
+                case 'o':
+                    blink_task_enable_blink();
+                    break;
+                case 'p':
+                    blink_task_disable_blink();
+                    break;
+                case 'i':
+                    self.input_mode = true;
+                    uart_write((uint8_t*)"Input mode (press ESC to exit)\r\n", 32);
+                default:
+                    // Ignore other
+                    break;
+            }
         }
     }
     else
@@ -66,13 +85,9 @@ void ledcontrol_run (void)
         // Either no data or error
     }
 
-    if (self.sendInfo)
+    if (self.sendInfoText)
     {
-        uint8_t* textToSend = (uint8_t*)infoText + self.infoTextPos;
-        self.infoTextPos += uart_write(textToSend, infoTextLen-self.infoTextPos);
-        if (self.infoTextPos == infoTextLen)
-        {
-            self.sendInfo = false;
-        }
+        uart_write((uint8_t*)infoText, sizeof(infoText));
+        self.sendInfoText = false;
     }
 }
