@@ -6,6 +6,7 @@ add_library(blinktask
     blinktask.h
     )
 
+target_include_directories(blinktask PUBLIC .)
 target_include_directories(blinktask PRIVATE ${BITLOOM_CORE}/include)
 target_include_directories(blinktask PRIVATE ${BITLOOM_CONFIG})
 

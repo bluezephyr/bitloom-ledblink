@@ -10,12 +10,14 @@
  *
  */
 
+#include "hal/i2c.h"
+#include "hal/timer.h"
 #include "core/scheduler.h"
 #include "core/uart.h"
-#include "hal/timer.h"
 #include "config/port_config.h"
 #include "blinktask.h"
 #include "ledcontrol.h"
+#include "hmc5883l.h"
 
 int main(void)
 {
@@ -23,6 +25,8 @@ int main(void)
     schedule_init();
     port_init();
     uart_init();
+    i2c_init();
+    hmc_driver_init();
 
     // Task initializations
     blink_task_init(schedule_add_task(240, 0, blink_task_run));

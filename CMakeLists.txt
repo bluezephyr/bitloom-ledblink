@@ -16,6 +16,10 @@ set(BITLOOM_CONFIG ${CMAKE_CURRENT_SOURCE_DIR}/${CONFIG})
 # CUTIL is a library containing common c utilities.  CUTIL needs to be set.
 set(CUTIL "${CMAKE_CURRENT_SOURCE_DIR}/cutil")
 
+# BITLOOM_DRIVERS contains implementation of drivers for different peripherals
+# that can be used in BitLoom products.
+set(BITLOOM_DRIVERS ${CMAKE_CURRENT_SOURCE_DIR}/bitloom-drivers)
+
 # Output BitLoom specific folders
 message(STATUS "CMAKE SOURCE: ${CMAKE_CURRENT_SOURCE_DIR}")
 message(STATUS "BITLOOM_HAL: ${BITLOOM_HAL}")
@@ -40,17 +44,15 @@ cc_add_executable(ledblink
 # Hence it needs to be available for all targets.
 include_directories(${BITLOOM_CONFIG})
 
-cc_target_include_directories(ledblink PRIVATE ${BITLOOM_CORE}/include)
-cc_target_include_directories(ledblink PRIVATE src/blinktask)
-cc_target_include_directories(ledblink PRIVATE src/ledcontrol)
-
 add_subdirectory(bitloom-core/src/scheduler libs/core/scheduler)
 add_subdirectory(bitloom-core/src/uart libs/core/uart)
 add_subdirectory(${BITLOOM_HAL}/src/timer libs/hal/timer)
 add_subdirectory(${BITLOOM_HAL}/src/pin_digital_io libs/hal/pin_digital_io)
 add_subdirectory(${BITLOOM_HAL}/src/uart_hal libs/hal/uart_hal)
+add_subdirectory(${BITLOOM_HAL}/src/i2c libs/hal/i2c)
 add_subdirectory(${BITLOOM_CONFIG}/config libs/config)
 add_subdirectory(${CUTIL}/src/bytebuffer libs/bytebuffer)
+add_subdirectory(bitloom-drivers/src/hmc5883l libs/drivers/hmc5883l)
 add_subdirectory(src/blinktask libs/blinktask)
 add_subdirectory(src/ledcontrol libs/ledcontrol)
 
@@ -63,3 +65,5 @@ cc_target_link_libraries(ledblink pin_digital_io)
 cc_target_link_libraries(ledblink uart_hal)
 cc_target_link_libraries(ledblink config)
 cc_target_link_libraries(ledblink bytebuffer)
+cc_target_link_libraries(ledblink i2c)
+cc_target_link_libraries(ledblink hmc5883l)
