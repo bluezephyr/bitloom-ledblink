@@ -18,6 +18,7 @@
 #include "blinktask.h"
 #include "ledcontrol.h"
 #include "hmc5883l.h"
+#include "compass.h"
 
 int main(void)
 {
@@ -31,6 +32,7 @@ int main(void)
     // Task initializations
     blink_task_init(schedule_add_task(240, 0, blink_task_run));
     ledcontrol_init(schedule_add_task(10, 0, ledcontrol_run));
+    compass_init(schedule_add_task(100, 0, compass_run));
 
     schedule_start();
     blink_task_enable_blink();

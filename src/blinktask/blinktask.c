@@ -13,12 +13,11 @@
 #include "hal/pin_digital_io.h"
 #include "blinktask.h"
 
-typedef struct
+static struct blinktask_t
 {
     bool led_activated;
     bool blinking_enabled;
-} blinktask_t;
-static blinktask_t self;
+} self;
 
 void blink_task_init (uint8_t taskid)
 {
@@ -55,5 +54,3 @@ void blink_task_run (void)
         pin_digital_io_write_low(LED_GREEN);
     }
 }
-
-
