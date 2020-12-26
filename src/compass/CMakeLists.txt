@@ -8,5 +8,6 @@ add_library(compass
 
 target_include_directories(compass PUBLIC .)
 target_include_directories(compass PRIVATE ${BITLOOM_CORE}/include)
+target_include_directories(compass PRIVATE ${BITLOOM_DRIVERS}/include)
 target_include_directories(compass PRIVATE ${BITLOOM_CONFIG})
 
