@@ -27,9 +27,9 @@ int main(void)
     port_init();
     uart_init();
     i2c_init();
-    hmc_driver_init();
 
     // Task initializations
+    hmc_init(schedule_add_task(10, 1, hmc_task_run));
     blink_task_init(schedule_add_task(240, 0, blink_task_run));
     ledcontrol_init(schedule_add_task(10, 0, ledcontrol_run));
     compass_init(schedule_add_task(100, 0, compass_run));
