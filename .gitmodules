@@ -7,3 +7,6 @@
 [submodule "cutil"]
 	path = cutil
 	url = ../cutil
+[submodule "bluepill-cmsis"]
+	path = bluepill-cmsis
+	url = ../bluepill-cmsis.git
